@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Fvno69VeXFsxS/vEpQ6glT6CF+GNjw7pZ/l5OyC64xrj0re1QN/36g8feTM+dVJZzoukT50oJcIl6GqGPKUcXQ==",
+  "success": true,
+  "projectFilePath": "H:\\githubCode\\IDS4Demo\\IDS4Demo\\ClientCredentialsDemo\\ClientCredentialsDemo\\ApiDemo\\ApiDemo.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}
