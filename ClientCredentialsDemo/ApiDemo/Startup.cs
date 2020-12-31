@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ApiDemo
 {
@@ -25,6 +26,29 @@ namespace ApiDemo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            // 注册认证相关组件和配置defaultScheme为Bearer
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    // 指定要接入的授权服务器地址
+                    options.Authority = "http://localhost:6100";
+                    // 在验证token时，不验证Audience
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                    // 不适用Https
+                    options.RequireHttpsMetadata = false;
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("orderScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "orderApi");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

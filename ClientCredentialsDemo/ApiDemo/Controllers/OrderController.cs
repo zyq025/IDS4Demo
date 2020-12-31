@@ -13,7 +13,7 @@ namespace ApiDemo.Controllers
     public class OrderController : ControllerBase
     {
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "orderScope")]
         public IActionResult Orders()
         {
             string[] orders = { "order1", "order2" , "order3" };
