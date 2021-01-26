@@ -1,0 +1,66 @@
+{
+  "_from": "live-server-https",
+  "_id": "live-server-https@0.0.2",
+  "_inBundle": false,
+  "_integrity": "sha1-mNQ2Gxr5QCH8NkI3EvqBQuf+jm8=",
+  "_location": "/live-server-https",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "live-server-https",
+    "name": "live-server-https",
+    "escapedName": "live-server-https",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/live-server-https/-/live-server-https-0.0.2.tgz",
+  "_shasum": "98d4361b1af94021fc36423712fa8142e7fe8e6f",
+  "_spec": "live-server-https",
+  "_where": "H:\\githubCode\\IDS4Demo\\IDS4Demo\\ImlicitDemo\\JsClient",
+  "author": {
+    "name": "Robert Pirtle"
+  },
+  "bugs": {
+    "url": "https://github.com/pirtleshell/live-server-https/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "tls.createServer options with SSL/TSL certificate for quick https setup for live-server",
+  "devDependencies": {
+    "xo": "^0.17.1"
+  },
+  "homepage": "https://github.com/pirtleshell/live-server-https#readme",
+  "keywords": [
+    "live-server",
+    "serve",
+    "localhost",
+    "https",
+    "ssl",
+    "tls",
+    "certifcate",
+    "createServer",
+    "development",
+    "server"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "live-server-https",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pirtleshell/live-server-https.git"
+  },
+  "scripts": {
+    "test": "xo"
+  },
+  "version": "0.0.2",
+  "xo": {
+    "esnext": true,
+    "space": true
+  }
+}

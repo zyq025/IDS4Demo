@@ -4,7 +4,7 @@
     "AuthorizationServerDemo": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:6100",
+      "applicationUrl": "https://localhost:6100",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

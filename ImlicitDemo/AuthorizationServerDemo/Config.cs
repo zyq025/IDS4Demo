@@ -1,4 +1,5 @@
 ﻿using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
@@ -20,6 +21,14 @@ namespace AuthorizationServerDemo
             };
         }
 
+        public static IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource> { 
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile()
+            };
+        }
+
         // 模拟备案用户
         public static List<TestUser> GetTestUsers()
         {
@@ -38,7 +47,7 @@ namespace AuthorizationServerDemo
                             new Claim(JwtClaimTypes.FamilyName, "ZZZ"),
                             new Claim(JwtClaimTypes.Email, "Zoe@email.com"),
                             new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                            new Claim(JwtClaimTypes.WebSite, "http://alice.com")
+                            new Claim(JwtClaimTypes.WebSite, "https://www.cnblogs.com/zoe-zyq/")
                     }
 
                 },
@@ -50,6 +59,8 @@ namespace AuthorizationServerDemo
                 }
             };
         }
+
+
 
         // 模拟备案客户端，不是任意一个应用都能到认证授权中心获取Token
         public static IEnumerable<Client> GetClients()
@@ -86,6 +97,26 @@ namespace AuthorizationServerDemo
                    // 指定客户端获取的Token能访问到的作用域
                    AllowedScopes={ "orderApi" }
 
+                },
+                new Client
+                {
+                    ClientId="JsClient",
+
+                    ClientName="JsTestClient",
+                    AllowedGrantTypes=GrantTypes.Implicit,
+                    //ClientUri="http://localhost:8080",
+                    RequireConsent=true,
+                    RedirectUris={ "https://localhost:8080/callback.html"},
+                    PostLogoutRedirectUris={"https://localhost:8080/index.html"},
+                    AllowedCorsOrigins={"https://localhost:8080" ,"https://127.0.0.1:8080"},
+                    AllowAccessTokensViaBrowser=true,
+                    AllowOfflineAccess=true,
+                    // 指定客户端获取的Token能访问到的作用域
+                    AllowedScopes={ 
+                        "orderApi" ,
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
                 }
             };
         }

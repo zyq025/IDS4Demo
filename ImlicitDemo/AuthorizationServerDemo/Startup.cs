@@ -27,10 +27,12 @@ namespace AuthorizationServerDemo
             services.AddControllersWithViews();
             // 注入对应的IdentityServer相关组件， 然后加载模拟数据
             var builder = services.AddIdentityServer()
+                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiScopes(Config.GetApiScopes())
                 .AddInMemoryClients(Config.GetClients())
                 // 模拟备案用户，即资源拥有者
                 .AddTestUsers(Config.GetTestUsers());
+               
 
             // 指定Token签名和验证的秘钥方式， 开发测试使用临时秘钥保存在本地；
             // 生产用AddSigingCredential, 这里后续会说到
@@ -44,14 +46,11 @@ namespace AuthorizationServerDemo
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            // 增加静态文件
             app.UseStaticFiles();
-
+            app.UseRouting();
             // 开启中间件
             app.UseIdentityServer();
-
-           
-            app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
