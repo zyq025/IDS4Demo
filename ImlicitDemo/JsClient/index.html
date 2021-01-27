@@ -1,17 +1,93 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title></title>
 </head>
+
 <body>
-    <button id="login">Login</button>
-    <button id="api">Call API</button>
-    <button id="logout">Logout</button>
-
-    <pre id="results"></pre>
-
+    <div id="app">
+        <button id="login" @click="login">Login</button>
+        <button id="api" @click="callApi">Call API</button>
+        <button id="logout" @click="logout">Logout</button>
+        <!-- 显示日志，包含登入、登出和请求API结果 -->
+        <pre id="results">{{results}}</pre>
+    </div>
     <script src="./js/oidc-client.js"></script>
-    <script src="./js/app.js"></script>
+    <script src="js/vue.js"></script>
+    <!-- <script src="./js/app.js"></script> -->
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            created() {
+                this.mgr = new Oidc.UserManager(this.config);
+            },
+            mounted() {
+                var that = this;
+                this.mgr.getUser().then(function(user) {
+                    if (user) {
+                        that.log("User logged in", user.profile);
+                    } else {
+                        that.log("User not logged in");
+                    }
+                });
+            },
+            data: {
+                // 客户端配置
+                config: {
+                    authority: "https://localhost:6100",
+                    client_id: "JsClient",
+                    redirect_uri: "https://localhost:8080/callback.html",
+                    response_type: "id_token token",
+                    scope: "openid profile orderApi", //openid profile 
+                    post_logout_redirect_uri: "https://localhost:8080/index.html",
+                },
+                mgr: null, //登录对象
+                results: "" //登录通过数据
+            },
+            methods: {
+                // 登录
+                login: function() {
+                    console.log("login");
+                    this.mgr.signinRedirect();
+                },
+                callApi: function() {
+                    console.log("CallAPI");
+                    // 先判断是否登录，登录之后在去调用API
+                    this.mgr.getUser().then(function(user) {
+                        var url = "http://localhosts:5000/api/Order";
+                        // 这里使用原生异步请求，就是引入第三方ajax库啦
+                        var xhr = new XMLHttpRequest();
+                        xhr.setRequestHeader("Authorization", "Bearer " + user.access_token);
+                        xhr.open("GET", url);
+                        xhr.onload = function() {
+                                // 显示请求API获取到的数据
+                                this.log(xhr.status, JSON.parse(xhr.responseText));
+                            }
+                            // 发送请求
+                        xhr.send();
+                    });
+                },
+                logout: function() {
+                    console.log("logout");
+                    // 登出
+                    this.mgr.signoutRedirect();
+                },
+                log: function() {
+                    var that = this;
+                    Array.prototype.forEach.call(arguments, function(msg) {
+                        if (msg instanceof Error) {
+                            msg = "Error: " + msg.message;
+                        } else if (typeof msg !== 'string') {
+                            msg = JSON.stringify(msg, null, 2);
+                        }
+                        that.results = msg + '\r\n';
+                    });
+                }
+            }
+        });
+    </script>
 </body>
+
 </html>
