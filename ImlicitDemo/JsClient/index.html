@@ -21,14 +21,16 @@
         var vm = new Vue({
             el: "#app",
             created() {
+                // 根据配置信息创建用户管理对象，后续直接使用
                 this.mgr = new Oidc.UserManager(this.config);
             },
             mounted() {
+                // 这里要注意this的使用
                 var that = this;
                 this.mgr.getUser().then(function(user) {
-                    if (user) {
+                    if (user) { // 判断是否登录成功
                         that.log("User logged in", user.profile);
-                    } else {
+                    } else { // 没登录
                         that.log("User not logged in");
                     }
                 });
@@ -36,12 +38,12 @@
             data: {
                 // 客户端配置
                 config: {
-                    authority: "https://localhost:6100",
+                    authority: "http://localhost:6100",
                     client_id: "JsClient",
-                    redirect_uri: "https://localhost:8080/callback.html",
+                    redirect_uri: "http://localhost:8080/callback.html",
                     response_type: "id_token token",
-                    scope: "openid profile orderApi", //openid profile 
-                    post_logout_redirect_uri: "https://localhost:8080/index.html",
+                    scope: "openid profile orderApi", //客户端需要的权限范围 
+                    post_logout_redirect_uri: "http://localhost:8080/index.html",
                 },
                 mgr: null, //登录对象
                 results: "" //登录通过数据
@@ -54,18 +56,20 @@
                 },
                 callApi: function() {
                     console.log("CallAPI");
+                    var that = this;
                     // 先判断是否登录，登录之后在去调用API
                     this.mgr.getUser().then(function(user) {
-                        var url = "http://localhosts:5000/api/Order";
+                        var url = "http://localhost:5000/api/Order";
                         // 这里使用原生异步请求，就是引入第三方ajax库啦
                         var xhr = new XMLHttpRequest();
-                        xhr.setRequestHeader("Authorization", "Bearer " + user.access_token);
+
                         xhr.open("GET", url);
                         xhr.onload = function() {
-                                // 显示请求API获取到的数据
-                                this.log(xhr.status, JSON.parse(xhr.responseText));
-                            }
-                            // 发送请求
+                            // 显示请求API获取到的数据
+                            that.log(xhr.status, JSON.parse(xhr.responseText));
+                        };
+                        xhr.setRequestHeader("Authorization", "Bearer " + user.access_token);
+                        // 发送请求
                         xhr.send();
                     });
                 },
@@ -74,6 +78,7 @@
                     // 登出
                     this.mgr.signoutRedirect();
                 },
+                // 将信息展示
                 log: function() {
                     var that = this;
                     Array.prototype.forEach.call(arguments, function(msg) {

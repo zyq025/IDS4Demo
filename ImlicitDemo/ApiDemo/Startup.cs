@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ApiDemo
@@ -39,6 +40,7 @@ namespace ApiDemo
                     };
                     // 不适用Https
                     options.RequireHttpsMetadata = false;
+                 
                 });
 
             services.AddAuthorization(options =>
@@ -49,6 +51,17 @@ namespace ApiDemo
                     policy.RequireClaim("scope", "orderApi");
                 });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("JsClient", policy => policy.WithOrigins("http://localhost:8080",
+                     "http://127.0.0.1:8080")
+                     .AllowAnyHeader()
+                     .AllowAnyMethod()
+                     .AllowCredentials()
+                );
+                    
+            });
+            IdentityModelEventSource.ShowPII = true;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,9 +71,9 @@ namespace ApiDemo
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseRouting();
-
+            app.UseCors("JsClient");
             // 注册认证过滤器，在授权过滤器前面
             app.UseAuthentication();
             // 注册授权过滤器

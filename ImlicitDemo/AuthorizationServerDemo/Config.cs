@@ -108,12 +108,12 @@ namespace AuthorizationServerDemo
                     AllowedGrantTypes=GrantTypes.Implicit,
                     // 授权操作页面支持，为true表示显示授权界面，否则不显示
                     RequireConsent=true,
-                    // 认证成功之后重定向到客户端的地址，注意这里是https
-                    RedirectUris={ "https://localhost:8080/callback.html"},
-                    // 登出时重定向到客户端的地址，注意这里是https
-                    PostLogoutRedirectUris={"https://localhost:8080/index.html"},
+                    // 认证成功之后重定向到客户端的地址
+                    RedirectUris={ "http://localhost:8080/callback.html"},
+                    // 登出时重定向到客户端的地址
+                    PostLogoutRedirectUris={"http://localhost:8080/index.html"},
                     // 由于跨域操作，所以设置允许跨域的站点地址，即客户端地址
-                    AllowedCorsOrigins={"https://localhost:8080" ,"https://127.0.0.1:8080"},
+                    AllowedCorsOrigins={"http://localhost:8080" ,"http://127.0.0.1:8080"},
                     // 允许浏览器传递AccessToken，如果不设置，如果通过浏览器操作就会报错
                     AllowAccessTokensViaBrowser=true,
                     // 允许返回刷新Token
