@@ -60,16 +60,20 @@ namespace MvcClientDemo
                 options.Scope.Add("profile");
                 // 允许获取刷新Token
                 options.Scope.Add("offline_access");
+                options.Scope.Add("orderApi");
+
+                // 允许从UserInfo endpoint获取剩余的Claims信息
+                options.GetClaimsFromUserInfoEndpoint = true;
 
             });
 
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    //https://docs.microsoft.com/zh-cn/aspnet/core/security/samesite?view=aspnetcore-3.1&viewFallbackFrom=aspnetcore-3
-            //    options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax;
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                //https://docs.microsoft.com/zh-cn/aspnet/core/security/samesite?view=aspnetcore-3.1&viewFallbackFrom=aspnetcore-3
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax;
 
-            //});
-            //services.ConfigureNonBreakingSameSiteCookies();
+            });
+            services.ConfigureNonBreakingSameSiteCookies();
 
         }
 
@@ -87,7 +91,7 @@ namespace MvcClientDemo
             app.UseStaticFiles();
 
             app.UseRouting();
-            //app.UseCookiePolicy();
+            app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
 
