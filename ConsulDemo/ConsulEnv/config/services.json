@@ -1,0 +1,22 @@
+{
+  "services": [
+    {
+      "id": "ZoeApi",
+      "name": "ZoeApiName",
+      "tags": [
+        "primary"
+      ],
+      "address": "127.0.0.1",
+      "port": 5000,
+      "checks": [
+        {
+          "name":"zoeapi_check",
+          "http":"http://127.0.0.1:5000/api/Health",
+          "interval": "5s",
+          "timeout": "20s"
+        }
+      ]
+    }
+    
+  ]
+}
