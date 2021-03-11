@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Consul;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,7 @@ namespace ConsulCodeDemo.Controllers
             // 读取请求体内数据，解析并发送
             var i = Request.Body.ReadAsync(bytes, 0, bytes.Length);
             string content = Encoding.UTF8.GetString(bytes).Trim('\0');
+            // 发送邮件
             SendMail(content);
             return Ok();
         }
@@ -52,9 +54,9 @@ namespace ConsulCodeDemo.Controllers
                 #region 构造邮件发送信息
                 var mailMsg = new MimeMessage();
                 // 发送方
-                mailMsg.From.Add(new MailboxAddress("ZoeQQMail", "1137533407@qq.com"));
+                mailMsg.From.Add(new MailboxAddress("ZoeQQMail", "发送的邮箱地址"));
                 // 接收方
-                mailMsg.To.Add(new MailboxAddress("ZoeCompanyMail", "zhongyiquan@autobio.com.cn"));
+                mailMsg.To.Add(new MailboxAddress("ZoeCompanyMail", "接收的邮箱地址"));
                 //主题
                 mailMsg.Subject = "服务故障报警";
                 // 内容
@@ -64,7 +66,7 @@ namespace ConsulCodeDemo.Controllers
                 };
                 // 内容可以是html 
                 ///var bodyBuilder = new BodyBuilder();
-                //bodyBuilder.HtmlBody = @"<b>This is bold and this is <i>italic</i></b>";
+                //bodyBuilder.HtmlBody = @"<b>msgtext <i>italic</i></b>";
                 //message.Body = bodyBuilder.ToMessageBody();
                 #endregion
                 using (var client = new SmtpClient())
@@ -75,8 +77,8 @@ namespace ConsulCodeDemo.Controllers
                     client.Connect("smtp.qq.com", 587, false);
                     //不需要OAuth2验证
                     client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    // SMTP 服务器需要认证
-                    client.Authenticate("1137533407@qq.com", "drcihukbidmagjii");
+                    // SMTP 服务器需要认证,输入邮箱地址和获取到的授权码即可
+                    client.Authenticate("发送方的邮箱地址", "drcihukbidmag开启服务时获取到授权码");
                     // 发送邮件
                     client.Send(mailMsg);
                     // 断开连接

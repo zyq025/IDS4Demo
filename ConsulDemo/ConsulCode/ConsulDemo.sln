@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsulConfigDemo", "ConsulDemo\ConsulConfigDemo.csproj", "{75DB2600-71FA-402D-ADDF-7CDAADCE8631}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsulConfigDemo", "ConsulDemo\ConsulConfigDemo.csproj", "{75DB2600-71FA-402D-ADDF-7CDAADCE8631}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsulCodeDemo", "ConsulCodeDemo\ConsulCodeDemo.csproj", "{01539CFC-2276-42F3-A298-AF5326DF0D76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsulCodeDemo", "ConsulCodeDemo\ConsulCodeDemo.csproj", "{01539CFC-2276-42F3-A298-AF5326DF0D76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindServiceDemo", "FindServiceDemo\FindServiceDemo.csproj", "{179B7619-A046-4DD8-A437-FCC7D5AACC62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{01539CFC-2276-42F3-A298-AF5326DF0D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01539CFC-2276-42F3-A298-AF5326DF0D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01539CFC-2276-42F3-A298-AF5326DF0D76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{179B7619-A046-4DD8-A437-FCC7D5AACC62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{179B7619-A046-4DD8-A437-FCC7D5AACC62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{179B7619-A046-4DD8-A437-FCC7D5AACC62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{179B7619-A046-4DD8-A437-FCC7D5AACC62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
