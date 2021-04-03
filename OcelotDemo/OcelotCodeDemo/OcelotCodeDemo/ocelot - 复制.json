@@ -1,0 +1,31 @@
+{
+  //"GlobalConfiguration": {
+  //  "ServiceDiscoveryProvider": {
+  //    "Scheme": "http",
+  //    "Host": "localhost",
+  //    "Port": 8500,
+  //    "Type": "Consul"
+  //  }
+  //},
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/OcelotTest1/{url}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        },
+        {
+          "Host": "localhost",
+          "Port": 8003
+        }
+      ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
+    }
+  ]
+}

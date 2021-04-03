@@ -1,0 +1,83 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "",
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  },
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/OcelotTest1/ServiceAPI1/Hello",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/ServiceAPI2/Hello",
+      "DownstreamScheme": "http",
+      "Priority": 0,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8001
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/OcelotTest1/{url}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/ServiceAPI1/{url}",
+      "DownstreamScheme": "http",
+      "Prioirty": 1,
+      "Key": "Service1",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/OcelotTest2/{url}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/ServiceAPI2/{url}",
+      "DownstreamScheme": "http",
+      "Key": "Service2",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8001
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/OcelotTestConsul/{url}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/ServiceAPI1/{url}",
+      "DownstreamScheme": "http",
+      "ServiceName": "ServiceAPI1Name",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8001
+        }
+      ]
+    }
+  ],
+  "Aggregates": [
+    {
+      "RouteKeys": [
+        "Service1",
+        "Service2"
+      ],
+      "UpstreamPathTemplate": "/Aggregates/Service1And2/{url}"
+    }
+  ]
+}

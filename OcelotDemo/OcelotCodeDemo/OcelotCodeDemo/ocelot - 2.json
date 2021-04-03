@@ -1,0 +1,23 @@
+{
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Scheme": "http",
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  },
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/OcelotTestConsul/{url}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/ServiceAPI1/{url}",
+      "UseServiceDiscovery": true,
+      "DownstreamScheme": "http",
+      "ServiceName": "ServiceAPI1Name",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    }
+  ]
+}

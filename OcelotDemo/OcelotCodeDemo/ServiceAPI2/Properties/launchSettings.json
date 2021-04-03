@@ -1,0 +1,14 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "ServiceAPI2": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/ServiceAPI2/Hello2",
+      "applicationUrl": "http://localhost:8001",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
