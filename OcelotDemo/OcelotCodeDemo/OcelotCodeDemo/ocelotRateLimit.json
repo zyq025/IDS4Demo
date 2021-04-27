@@ -1,0 +1,37 @@
+{
+  //"GlobalConfiguration": {
+  //  "RateLimitOptions": {
+  //    // 指定超出最大请求数时返回的消息
+  //    "QuotaExceededMessage": "Request Limit 5",
+  //    // 指定超出最大请求数时返回的Http状态码
+  //    "HttpStatusCode": "888"
+  //  }
+  //},
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/OcelotRateLimitTest/{url}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ],
+      "RateLimitOptions": {
+        //白名单列表，不限制白名单客户端请求，在请求头中带上，默认名称是ClientId
+        "ClientWhitelist": [ "client1" ],
+        // 是否开启限流
+        "EnableRateLimiting": true,
+        // 设置采样时间，这里设置的是3秒，  分钟用m标识，小时用h表示，天用d表示
+        "Period": "3s", // 1s  1m   1h   1d
+        // 限流之后多长时间可以重试，单位为秒
+        "PeriodTimespan": 10,
+        // 允许指定时间内可以处理的最大请求数
+        "Limit": 5
+      }
+    }
+
+  ]
+}

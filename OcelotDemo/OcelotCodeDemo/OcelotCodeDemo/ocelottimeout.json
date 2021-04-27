@@ -1,0 +1,24 @@
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/OcelotTest/{url}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ],
+      "QoSOptions": {
+        // 允许异常次数
+        "ExceptionsAllowedBeforeBreaking": 3,
+        // 熔断时间，这里代表3秒，
+        "DurationOfBreak": 3000,
+        // 超时时间，超过2s算超时
+        "TimeoutValue": 2000
+      }
+    }
+  ]
+}
