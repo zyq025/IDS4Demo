@@ -1,23 +1,32 @@
 {
-  "GlobalConfiguration": {
-    "ServiceDiscoveryProvider": {
-      "Scheme": "http",
-      "Host": "localhost",
-      "Port": 8500,
-      "Type": "Consul"
-    }
-  },
   "Routes": [
     {
-      "UpstreamPathTemplate": "/OcelotTestConsul/{url}",
+      "UpstreamPathTemplate": "/OcelotAuthTest/{url}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/{url}",
-      "UseServiceDiscovery": true,
       "DownstreamScheme": "http",
-      "ServiceName": "ServiceAPI1Name",
-      "LoadBalancerOptions": {
-        "Type": "RoundRobin"
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestGatewaykey",
+        "AllowedScopes": []
       }
+    },
+    {
+      "UpstreamPathTemplate": "/OcelotNoAuthTest/{url}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ]
     }
   ]
 }
